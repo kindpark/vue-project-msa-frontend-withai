@@ -3,8 +3,16 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 
+// 1. 상품 객체 타입 정의 (never 에러 원천 차단)
+interface Product {
+  id: number | string
+  name: string
+  price: number
+  thumbnailUrl?: string
+}
+
 const router = useRouter()
-const products = ref([])
+const products = ref<Product[]>([])
 const isLoading = ref(true)
 
 const fetchProducts = async () => {
@@ -18,7 +26,7 @@ const fetchProducts = async () => {
   }
 }
 
-const goToDetail = (productId) => {
+const goToDetail = (productId: number | string) => {
   router.push(`/products/${productId}`)
 }
 

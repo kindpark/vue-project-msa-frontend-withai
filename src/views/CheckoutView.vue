@@ -15,7 +15,7 @@ interface Product {
 const route = useRoute()
 const router = useRouter()
 
-const product = ref(null)
+const product = ref<Product|null>(null)
 
 const address = ref('')
 const isProcessing = ref(false)
@@ -35,12 +35,22 @@ onMounted(async () => {
       product.value = res.data
     } catch (err) {
       console.warn('기본 테스트 상품 정보로 진행합니다.')
+          product.value = {
+      id: Number(productId),
+      name: '테스트 상품',
+      price: 15000
+    }
     }
   }
 )
 
 const handlePayment = async () => {
-  if (!address.value.trim()) {
+  // 상단에서 null 체크가 안 되어 있을 수 있으므로 방어 코드 추가
+  if (!product.value) {
+    alert('상품 정보가 없습니다.')
+    return
+  }
+    if (!address.value.trim()) {
     alert('배송지 주소를 입력해 주세요.')
     return
   }

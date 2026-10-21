@@ -3,23 +3,31 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 
+//상품 데이터 구조 정의
+interface Product{
+  id: number | string;
+  name: string;
+  price: number;
+  description?: string;
+  thumbnailUrl?: string;
+  quantity: number;
+}
 const route = useRoute()
 const router = useRouter()
-const product = ref(null)
+//null 혹은 Product 타입이 들어올수 있다고 명시하여 'never 에러 방지'
+const product = ref<Product | null>(null)
 const stockQuantity = ref(0)
 const isLoading = ref(true)
 
 const loadData = async () => {
   const productId = route.params.id
   try {
-    const [productRes, stockRes] = await Promise.all([
-      axios.get(`/api/v1/products/${productId}`),
-      axios.get(`/api/v1/stocks/${productId}`)
-    ])
-    product.value = productRes.data
-    stockQuantity.value = stockRes.data.quantity
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (err) {
+
+
+    const res = await axios.get(`/api/v1/products/${productId}`);
+    product.value = res.data
+    stockQuantity.value = res.data.quantity
+  } catch {
     alert('상품 정보를 가져오지 못했습니다.')
   } finally {
     isLoading.value = false
@@ -27,9 +35,10 @@ const loadData = async () => {
 }
 
 const goToCheckout = () => {
+  if(!product.value) return
   router.push({
     path: '/checkout',
-    query: { productId: product.value.id }
+    query: { productId: product.value?.id }
   })
 }
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import axios from 'axios'
+import axios, {isAxiosError} from 'axios'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -21,8 +21,14 @@ const handleLogin = async () => {
     alert('로그인 성공했습니다!')
     router.push('/')
   } catch (err) {
-    alert('로그인 실패: ' + (err.response?.data?.message || '이메일 또는 비밀번호를 확인하세요.'))
-  } finally {
+     // Axios 에러인지 확인하여 안전하게 데이터에 접근 (unknown 에러 해결)
+        if (isAxiosError(err)) {
+      const errorMessage = err.response?.data?.message || '이메일 또는 비밀번호를 확인하세요.'
+      alert('로그인 실패: ' + errorMessage)
+    } else {
+      // Axios 에러가 아닌 일반 런타임 에러 처리
+      alert('로그인 처리 중 문제가 발생했습니다.')
+    }
     isLoading.value = false
   }
 }
