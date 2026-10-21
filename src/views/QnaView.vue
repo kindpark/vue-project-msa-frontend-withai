@@ -2,7 +2,15 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
-const qnaList = ref([])
+// 1. Q&A 객체 타입 정의
+interface QnaItem {
+  id: number
+  content: string
+  answer?: string | null
+}
+
+// 2. never[] 대신 QnaItem[] 제네릭 명시
+const qnaList = ref<QnaItem[]>([])
 const newContent = ref('')
 
 const fetchQna = async () => {
