@@ -33,6 +33,7 @@ const goToDetail = (productId: number | string) => {
 onMounted(fetchProducts)
 </script>
 
+
 <template>
   <div class="container">
     <h1>홈쇼핑 상품 목록</h1>

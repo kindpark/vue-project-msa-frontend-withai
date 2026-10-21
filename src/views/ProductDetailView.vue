@@ -61,6 +61,7 @@ onMounted(loadData)
           </strong>
         </div>
 
+        
         <button
           class="buy-btn"
           :disabled="stockQuantity <= 0"

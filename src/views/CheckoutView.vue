@@ -12,6 +12,7 @@ interface Product {
   price: number
 }
 
+
 const route = useRoute()
 const router = useRouter()
 
