@@ -51,6 +51,11 @@ const handleLogin = async () => {
         {{ isLoading ? '로그인 중...' : '로그인' }}
       </button>
     </form>
+    <div class="triple-zone">
+        <a href="/signup">회원가입</a>
+        <a href="/changepw">패스워드 변경</a>
+        <a href="/find-account">아이디/패스워드 찾기</a>
+    </div>
   </div>
 </template>
 
@@ -61,4 +66,13 @@ const handleLogin = async () => {
 input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; margin-top: 5px; }
 button { padding: 12px; background-color: #42b883; color: white; border: none; border-radius: 4px; cursor: pointer; }
 button:disabled { background-color: #aaa; }
+.triple-zone{
+  display:flex;
+  justify-content: space-between;
+  padding-top: 15px;
+}
+.triple-zone a{
+  color:inherit;
+  text-decoration: none;
+}
 </style>

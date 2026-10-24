@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useOrderStore } from '@/stores/orderStore';
 import axios from 'axios'
 
 //상품 데이터 구조 정의
@@ -17,6 +18,7 @@ const router = useRouter()
 //null 혹은 Product 타입이 들어올수 있다고 명시하여 'never 에러 방지'
 const product = ref<Product | null>(null)
 const stockQuantity = ref(0)
+const orderStore = useOrderStore()
 const isLoading = ref(true)
 
 const loadData = async () => {
@@ -41,6 +43,20 @@ const goToCheckout = () => {
     query: { productId: product.value?.id }
   })
 }
+const handleBuyNow = () => {
+  if (!product.value) return;
+
+  // Pinia 스토어에 주문 정보 저장
+  orderStore.setOrder({
+    productId: Number(product.value.id),
+    productName: product.value.name,
+    price: product.value.price,
+    quantity: 1, // 선택한 수량
+    thumbnailUrl: product.value.thumbnailUrl
+  });
+
+  router.push('/checkout');
+};
 
 onMounted(loadData)
 </script>
@@ -61,7 +77,7 @@ onMounted(loadData)
           </strong>
         </div>
 
-        
+
         <button
           class="buy-btn"
           :disabled="stockQuantity <= 0"
