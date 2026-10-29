@@ -10,6 +10,9 @@ const SignupView = () => import('@/views/SignupView.vue')
 const CheckoutView = () => import('@/views/CheckoutView.vue')
 const MyPageView = () => import('@/views/MyPageView.vue')
 const QnaView = () => import('@/views/QnaView.vue')
+const PaymentSuccessView = () => import('@/views/PaymentSuccessView.vue')
+const PaymentFailView = () => import('@/views/PaymentFailView.vue')
+
 const routes = [
   { path: '/', name: 'Home', component: HomeView },
   { path: '/login', name: 'Login', component: LoginView },
@@ -20,6 +23,8 @@ const routes = [
   { path: '/checkout', name: 'Checkout', component: CheckoutView },
   { path: '/mypage', name: 'MyPage', component: MyPageView },
   { path: '/qna', name: 'Qna', component: QnaView },
+  { path: '/payments/success', name: 'payments-success', component:PaymentSuccessView },
+  { path: '/payments/fail', name: 'payments-fail', component:PaymentFailView }
 ]
 
 const router = createRouter({
