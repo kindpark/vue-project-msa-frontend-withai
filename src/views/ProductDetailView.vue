@@ -43,6 +43,7 @@ const goToCheckout = () => {
     query: { productId: product.value?.id }
   })
 }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const handleBuyNow = () => {
   if (!product.value) return;
 
